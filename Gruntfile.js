@@ -18,6 +18,7 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
+                    'src/directives/line/line.js',
                     'src/bundle.js'],
                 dest: 'dist/bundle.js'
             },
