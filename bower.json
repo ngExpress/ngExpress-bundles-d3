@@ -1,0 +1,17 @@
+{
+  "name": "ngExpress-bundles-d3",
+  "version": "0.0.1",
+  "main": ["./dist/bundle.js", "./dist/bundle.css"],
+  "ignore": [
+    "src",
+    "Gruntfile.js",
+    "package.json",
+    ".gitignore",
+    ".git"
+  ],
+  "dependencies": {
+    "angular": "1.2.9",
+    "d3": "3.0.8",
+    "r2d3": "0.2.0"
+  }
+}
