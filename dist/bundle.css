@@ -15,3 +15,8 @@
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+
+.d3 {
+    background: #ccc;
+    border: 1px solid #000;
+}

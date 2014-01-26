@@ -1,23 +1,21 @@
 'use strict';
 
 angular.module('ngExpress.bundles.d3.line', [])
-    .controller('D3LineCtrl', [
-        '$scope', function($scope) {
-        }
-    ])
-    .directive('d3Line', [
-        function() {
+    .directive('d3Line', ['$parse',
+        function($parse) {
             return {
-                'template': '<div id="chart">D3LineCtrl</div>',
                 'restrict': 'EA',
                 'link': function(scope, element, attrs) {
-                    var data = d3.range(40).map(function(i) {
-                      return {x: i / 39, y: (Math.sin(i / 3) + 2) / 4};
-                    });
+                    var data = $parse(attrs['data'])(scope);
 
-                    var margin = {top: 10, right: 10, bottom: 20, left: 40},
-                        width = 960 - margin.left - margin.right,
-                        height = 500 - margin.top - margin.bottom;
+                    var margin = {
+                        top: 10,
+                        right: 10,
+                        bottom: 20,
+                        left: 40
+                    },
+                        width = 600 - margin.left - margin.right,
+                        height = 350 - margin.top - margin.bottom;
 
                     var x = d3.scale.linear()
                         .domain([0, 1])
@@ -36,14 +34,20 @@ angular.module('ngExpress.bundles.d3.line', [])
                         .orient("left");
 
                     var line = d3.svg.line()
-                        .x(function(d) { return x(d.x); })
-                        .y(function(d) { return y(d.y); });
+                        .x(function(d) {
+                            return x(d.x);
+                        })
+                        .y(function(d) {
+                            return y(d.y);
+                        });
 
-                    var svg = d3.select("#chart").append("svg")
+                    element.addClass('chart').attr('style', 'width: 600px; height: 350px;');
+
+                    var svg = d3.select(element[0]).append("svg")
                         .datum(data)
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
-                      .append("g")
+                        .append("g")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                     svg.append("g")
@@ -61,7 +65,7 @@ angular.module('ngExpress.bundles.d3.line', [])
 
                     svg.selectAll(".dot")
                         .data(data)
-                      .enter().append("circle")
+                        .enter().append("circle")
                         .attr("class", "dot")
                         .attr("cx", line.x())
                         .attr("cy", line.y())
